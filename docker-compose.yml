@@ -10,7 +10,7 @@ services:
   mongo:
     #docker run --rm --name endif-mongo-container -d -v $(pwd)/mongo-volume:/data/db -p 27017:27017 mongo:4.4
     image: 'mongo:4.4'
-
+    
     container_name: 'endif-mongo-container'
     restart: always
     #environment:
@@ -24,13 +24,13 @@ services:
       #- ./mongo-volume:/data/db
       # Si  existe la variable de entorno carga FOLDER_DATABASE si no ./mongo-volume
       - ${FOLDER_DATABASE:-./mongo-volume}:/data/db
-
+ 
 
     networks:
       - mongo-compose-network
      #command: mongod
 
-
+ 
 #Web: API Fast-API
   api:
     image: 'raulreyero/fastapi-mongo'
@@ -38,7 +38,7 @@ services:
     depends_on:
       - "mongo"
     restart: always
-    volumes:
+    volumes: 
       - ./workdir:/workdir
     env_file:
       - .env
@@ -48,3 +48,48 @@ services:
       - "mongo:mongo"
     networks:
       - mongo-compose-network
+
+ 
+#Scraper(demonio): 
+  scrap_launch:
+    image: "raulreyero/endif-scrap:v3"
+    container_name: 'endif-scrap_launch'
+    depends_on:
+      - "mongo"
+    restart: always
+    volumes: 
+      - ./workdir:/workdir
+    shm_size: '2gb'
+    env_file:
+      - .env
+    links:
+      - "mongo:mongo"
+    networks:
+      - mongo-compose-network
+
+
+#Mongo Express: Visualizar los datos
+  express:
+    image: mongo-express
+    container_name: 'endif-express'
+    env_file:
+      - .env
+    depends_on:
+      - "mongo"
+    ports:
+      - "8081:8081"
+    links:
+      - "mongo:mongo"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      #Se leen de variables de configuración en .env
+      - ME_CONFIG_BASICAUTH_USERNAME
+      - ME_CONFIG_BASICAUTH_PASSWORD
+    networks:
+      - mongo-compose-network      
+
+networks: 
+    mongo-compose-network:
+      driver: bridge
+      name: mongo-compose-network
