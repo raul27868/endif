@@ -40,9 +40,9 @@ services:
     env_file:
       - .env
     ports:
-      - "5005:80" #airbnb
-      - "5006:80" #destinia
-      - "5007:80" #expedia
+      - "5006:80" #airbnb
+      - "5007:80" #destinia
+      - "5008:80" #expedia
     links:
       - "mongo:mongo"
     networks:
