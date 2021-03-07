@@ -38,8 +38,8 @@ services:
 # docker exec -it endif-scrap_launch
 # cd /usr/local/src ;   python scrap_launch.py
   scrap_launch:
-    image: "raulreyero/endif-scrap-api:v1"
-    container_name: 'endif-scrap-api-v1'
+    image: "raulreyero/endif-scrap-api:v4"
+    container_name: 'endif-scrap-api-v4'
     depends_on:
       - "mongo"
     restart: always
