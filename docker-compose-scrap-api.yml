@@ -1,10 +1,10 @@
 #Docker Compose for develop
 #star:  docker-compose -f docker-compose-scrap-api.yml up -d
 #stop:  docker-compose -f docker-compose-scrap-api.yml rm -fsv
-#  docker exec  -it endif-scrap-api-v1 sh -c "cd /usr/local/src; sh"
+#  docker exec  -it endif-scrap-api-v5 sh -c "cd /usr/local/src; sh"
 #   DEV : . scrap                     #Procesa solo la primera tarea pendiente
 #   PROD:  python scrap_launch.py     #Se queda a la espera
-#LOG: docker logs endif-scrap-api-v1
+#LOG: docker logs endif-scrap-api-v5 -f
 
 #Usar variables dentro de compose: https://docs.docker.com/compose/compose-file/compose-file-v3/#variable-substitution
 
@@ -38,8 +38,8 @@ services:
 # docker exec -it endif-scrap_launch
 # cd /usr/local/src ;   python scrap_launch.py
   scrap_launch:
-    image: "raulreyero/endif-scrap-api:v4"
-    container_name: 'endif-scrap-api-v4'
+    image: "raulreyero/endif-scrap-api:v5"
+    container_name: 'endif-scrap-api-v5'
     depends_on:
       - "mongo"
     restart: always
@@ -56,9 +56,9 @@ services:
       - "mongo:mongo"
     networks:
       - mongo-compose-network
-    #PENDIENTE. Mejorarlo para que sea en base a la variable de entorno
     command: 
-      /bin/sh -c ". init_all.sh ; sh"   
+      #/bin/sh -c ". init_all.sh ; sh"   
+      /bin/sh -c "(crond -f -d 8 &) && python api.py "
       
     stdin_open: true # docker run -i
     tty: true        # docker run -t
