@@ -20,8 +20,8 @@ services:
     init: true
     #environment:
      #   - MONGO_INITDB_ROOT_DATABASE=db-endif
-     #   - MONGO_INITDB_ROOT_USERNAME=root
-     #   - MONGO_INITDB_ROOT_PASSWORD=7Vctnp_pju2
+     #   - MONGO_INITDB_ROOT_USERNAME=xxxxxx
+     #   - MONGO_INITDB_ROOT_PASSWORD=xxxxxxx
     ports:
       - "27017:27017"
     volumes:
