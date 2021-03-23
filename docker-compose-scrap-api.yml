@@ -4,7 +4,7 @@
 #  docker exec  -it endif-scrap-api-v5 sh -c "cd /usr/local/src; sh"
 #   DEV : . scrap                     #Procesa solo la primera tarea pendiente
 #   PROD:  python scrap_launch.py     #Se queda a la espera
-#LOG: docker logs endif-scrap-api-v5 -f
+#LOG: docker logs endif-scrap-api-2021.03.23 -f
 
 #Usar variables dentro de compose: https://docs.docker.com/compose/compose-file/compose-file-v3/#variable-substitution
 
@@ -38,8 +38,8 @@ services:
 # docker exec -it endif-scrap_launch
 # cd /usr/local/src ;   python scrap_launch.py
   scrap_launch:
-    image: "raulreyero/endif-scrap-api:v5"
-    container_name: 'endif-scrap-api-v5'
+    image: "raulreyero/endif-scrap-api:2021.03.23"
+    container_name: 'endif-scrap-api-2021.03.23'
     depends_on:
       - "mongo"
     restart: always
