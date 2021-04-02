@@ -1,5 +1,5 @@
 #Docker Compose for develop
-#star:  docker-compose -f docker-compose-scrap-api.yml up -d
+#star:  docker pull raulreyero/endif-scrap-api:latest && docker-compose -f docker-compose-scrap-api.yml up --build -d
 #stop:  docker-compose -f docker-compose-scrap-api.yml rm -fsv
 #  docker exec  -it endif-scrap-api-v5 sh -c "cd /usr/local/src; sh"
 
